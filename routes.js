@@ -8,4 +8,12 @@ router.get('/', function (req, res) {
 });
 router.get('/test', userController_1.UserController.isAuthenticated);
 router.post('/login', userController_1.UserController.userLogIn);
+router.post('/admin/logout', function (req, res) {
+    if (req.session)
+        req.session.destroy(function (err) {
+            res.status(200).json({ message: "User logged out" });
+            if (err)
+                console.log('[/admin/logout]', err);
+        });
+});
 exports.default = router;

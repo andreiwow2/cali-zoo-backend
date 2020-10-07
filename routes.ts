@@ -11,4 +11,13 @@ router.get('/test', UserController.isAuthenticated);
 
 router.post('/login', UserController.userLogIn);
 
+router.post('/admin/logout', (req, res) => {
+    if (req.session)
+        req.session.destroy((err) => {
+            res.status(200).json({message: "User logged out"});
+            if(err)
+                console.log('[/admin/logout]', err);
+        });
+})
+
 export default router;
