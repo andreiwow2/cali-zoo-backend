@@ -57,19 +57,8 @@ var UserController = /** @class */ (function (_super) {
     function UserController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    // protected async executeImpl (req: Request, res: Response): Promise<void | any> {
-    //     try {
-    //         if (!req.body) return this.isAuthenticated(req, res);
-    //         const { email, password } = req.body;
-    //         knex('accounts').count('userId').first().then((total: any) => {
-    //             if(total.count) this.userLogIn(req, res)
-    //         });
-    //     } catch(err) {
-    //     }
-    // }
     UserController.isAuthenticated = function (req, res) {
         try {
-            //const code = (req.isAuthenticated() ? 500 : 200);
             res.status(200).send(req.isAuthenticated());
         }
         catch (err) {
@@ -97,8 +86,6 @@ var UserController = /** @class */ (function (_super) {
                                 console.log(err);
                             });
                             res.status(200).send(req.session.cookie);
-                            console.log(req.session);
-                            console.log(req.sessionID);
                         }
                         else {
                             res.status(500).send('error with session, no session');
@@ -112,34 +99,3 @@ var UserController = /** @class */ (function (_super) {
     return UserController;
 }(BaseController_1.BaseController));
 exports.UserController = UserController;
-// export const userCreation = async (req: Request, res: Response) => {
-//     console.log('heree');
-//     console.log(req.user);
-//     console.log(req.session);
-//     console.log(req.headers);
-//     res.status(200).send(req.isAuthenticated())
-//     return;
-// }
-// export const userDeletion = async (req: Request, res: Response) => {
-//     return;
-// }
-// export const userLogIn = async (req: Request, res: Response) => {
-//     passport.default.authenticate('local', (err, user, info) => {
-//         if (err) { res.status(500).send('error'); console.log(err)}
-//         if (!user) { res.status(404).send('User not found!'); }
-//         if (user)
-//         {
-//             req.logIn(user, function (err) {
-//                 if (err) { res.status(500).send('error'); console.log(err)}
-//                 if(req.session){ 
-//                     req.session.save((err) => {
-//                         console.log(err);
-//                     });
-//                     res.status(200).send(req.session.cookie);
-//                     console.log(req.session);
-//                     console.log(req.sessionID);
-//                 } else { res.status(500).send('error with session, no session'); }
-//             });
-//         }
-//     })(req, res);
-// }
