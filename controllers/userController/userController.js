@@ -43,7 +43,8 @@ exports.userCreation = function (req, res) { return __awaiter(void 0, void 0, vo
         console.log('heree');
         console.log(req.user);
         console.log(req.session);
-        console.log(req.body);
+        console.log(req.headers);
+        res.status(200).send(req.isAuthenticated());
         return [2 /*return*/];
     });
 }); };
@@ -69,11 +70,10 @@ exports.userLogIn = function (req, res) { return __awaiter(void 0, void 0, void 
                         console.log(err);
                     }
                     if (req.session) {
-                        req.session.user = req.user;
                         req.session.save(function (err) {
                             console.log(err);
                         });
-                        res.status(200);
+                        res.status(200).send(req.session.cookie);
                         console.log(req.session);
                         console.log(req.sessionID);
                     }

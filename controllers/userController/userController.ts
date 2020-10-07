@@ -9,7 +9,8 @@ export const userCreation = async (req: Request, res: Response) => {
     console.log('heree');
     console.log(req.user);
     console.log(req.session);
-    console.log(req.body);
+    console.log(req.headers);
+    res.status(200).send(req.isAuthenticated())
     return;
 }
 
@@ -27,12 +28,11 @@ export const userLogIn = async (req: Request, res: Response) => {
         {
             req.logIn(user, function (err) {
                 if (err) { res.status(500).send('error'); console.log(err)}
-                if(req.session){  
-                    req.session.user = req.user
+                if(req.session){ 
                     req.session.save((err) => {
                         console.log(err);
                     });
-                    res.status(200);
+                    res.status(200).send(req.session.cookie);
                     console.log(req.session);
                     console.log(req.sessionID);
                 } else { res.status(500).send('error with session, no session'); }

@@ -38,7 +38,6 @@ app.use(express.static(__dirname + 'public'));
 
 app.options('*', cors(options));
 
-
 app.use(session({
     secret: 'test-secret',
     name: 'sid',
@@ -47,7 +46,7 @@ app.use(session({
     }),
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 2 * 60 * 60 * 1000/* 2 hours */, secure: false }
+    cookie: { maxAge: 2 * 60 * 60 * 1000/* 2 hours */, secure: false, httpOnly: false }
 }));
 
 app.use(passport.initialize());
