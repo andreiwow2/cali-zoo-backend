@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { userLogIn, userCreation } from './controllers/userController/userController';
+import { UserController } from './controllers/userController/userController';
 
 const router = Router();
 
@@ -7,8 +7,8 @@ router.get('/', (req: Request, res: Response) => {
     return res.send('It worked!');
 });
 
-router.get('/test', userCreation);
+router.get('/test', UserController.isAuthenticated);
 
-router.post('/login', userLogIn);
+router.post('/login', UserController.userLogIn);
 
 export default router;

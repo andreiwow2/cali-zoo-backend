@@ -6,6 +6,6 @@ var router = express_1.Router();
 router.get('/', function (req, res) {
     return res.send('It worked!');
 });
-router.get('/test', userController_1.userCreation);
-router.post('/login', userController_1.userLogIn);
+router.get('/test', userController_1.UserController.isAuthenticated);
+router.post('/login', userController_1.UserController.userLogIn);
 exports.default = router;

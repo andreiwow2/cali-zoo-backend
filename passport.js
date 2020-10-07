@@ -11,9 +11,8 @@ exports.default = (function () {
         done(null, user.userId);
     });
     passport_1.default.deserializeUser(function (userId, done) {
-        console.log('inside des');
         knex_1.knex('accounts').where({ userId: userId }).first()
-            .then(function (user) { done(null, user); console.log(user); })
+            .then(function (user) { done(null, user); })
             .catch(function (err) { done(err, null); console.log("deserialoize Error " + err); });
     });
 });

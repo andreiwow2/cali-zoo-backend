@@ -8,9 +8,8 @@ export default () => {
     });
 
     passport.deserializeUser((userId: any, done: any) => {
-        console.log('inside des');
         knex('accounts').where({userId: userId}).first()
-        .then((user) => { done(null, user); console.log(user)})
+        .then((user) => { done(null, user);})
         .catch((err) => { done(err, null); console.log(`deserialoize Error ${err}`) });
     });
 }

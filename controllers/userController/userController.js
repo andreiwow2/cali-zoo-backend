@@ -1,4 +1,17 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,53 +49,97 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userLogIn = exports.userDeletion = exports.userCreation = void 0;
+exports.UserController = void 0;
 var passport = require("../../auth/local");
-exports.userCreation = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        console.log('heree');
-        console.log(req.user);
-        console.log(req.session);
-        console.log(req.headers);
-        res.status(200).send(req.isAuthenticated());
-        return [2 /*return*/];
-    });
-}); };
-exports.userDeletion = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/];
-    });
-}); };
-exports.userLogIn = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        passport.default.authenticate('local', function (err, user, info) {
-            if (err) {
-                res.status(500).send('error');
-                console.log(err);
-            }
-            if (!user) {
-                res.status(404).send('User not found!');
-            }
-            if (user) {
-                req.logIn(user, function (err) {
-                    if (err) {
-                        res.status(500).send('error');
-                        console.log(err);
-                    }
-                    if (req.session) {
-                        req.session.save(function (err) {
+var BaseController_1 = require("../models/BaseController");
+var UserController = /** @class */ (function (_super) {
+    __extends(UserController, _super);
+    function UserController() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    // protected async executeImpl (req: Request, res: Response): Promise<void | any> {
+    //     try {
+    //         if (!req.body) return this.isAuthenticated(req, res);
+    //         const { email, password } = req.body;
+    //         knex('accounts').count('userId').first().then((total: any) => {
+    //             if(total.count) this.userLogIn(req, res)
+    //         });
+    //     } catch(err) {
+    //     }
+    // }
+    UserController.isAuthenticated = function (req, res) {
+        try {
+            //const code = (req.isAuthenticated() ? 500 : 200);
+            res.status(200).send(req.isAuthenticated());
+        }
+        catch (err) {
+            console.log(err);
+        }
+    };
+    UserController.userLogIn = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            passport.default.authenticate('local', function (err, user, info) {
+                if (err) {
+                    res.status(500).send('error');
+                    console.log(err);
+                }
+                if (!user) {
+                    res.status(404).send('User not found!');
+                }
+                if (user) {
+                    req.logIn(user, function (err) {
+                        if (err) {
+                            res.status(500).send('error');
                             console.log(err);
-                        });
-                        res.status(200).send(req.session.cookie);
-                        console.log(req.session);
-                        console.log(req.sessionID);
-                    }
-                    else {
-                        res.status(500).send('error with session, no session');
-                    }
-                });
-            }
-        })(req, res);
-        return [2 /*return*/];
-    });
-}); };
+                        }
+                        if (req.session) {
+                            req.session.save(function (err) {
+                                console.log(err);
+                            });
+                            res.status(200).send(req.session.cookie);
+                            console.log(req.session);
+                            console.log(req.sessionID);
+                        }
+                        else {
+                            res.status(500).send('error with session, no session');
+                        }
+                    });
+                }
+            })(req, res);
+            return [2 /*return*/];
+        });
+    }); };
+    return UserController;
+}(BaseController_1.BaseController));
+exports.UserController = UserController;
+// export const userCreation = async (req: Request, res: Response) => {
+//     console.log('heree');
+//     console.log(req.user);
+//     console.log(req.session);
+//     console.log(req.headers);
+//     res.status(200).send(req.isAuthenticated())
+//     return;
+// }
+// export const userDeletion = async (req: Request, res: Response) => {
+//     return;
+// }
+// export const userLogIn = async (req: Request, res: Response) => {
+//     passport.default.authenticate('local', (err, user, info) => {
+//         if (err) { res.status(500).send('error'); console.log(err)}
+//         if (!user) { res.status(404).send('User not found!'); }
+//         if (user)
+//         {
+//             req.logIn(user, function (err) {
+//                 if (err) { res.status(500).send('error'); console.log(err)}
+//                 if(req.session){ 
+//                     req.session.save((err) => {
+//                         console.log(err);
+//                     });
+//                     res.status(200).send(req.session.cookie);
+//                     console.log(req.session);
+//                     console.log(req.sessionID);
+//                 } else { res.status(500).send('error with session, no session'); }
+//             });
+//         }
+//     })(req, res);
+// }
