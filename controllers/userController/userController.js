@@ -82,10 +82,8 @@ var UserController = /** @class */ (function (_super) {
                             console.log(err);
                         }
                         if (req.session) {
-                            req.session.save(function (err) {
-                                console.log(err);
-                            });
-                            res.status(200).send(req.session.cookie);
+                            req.session.save(function (err) { });
+                            res.status(200).json({ cookie: req.session.cookie, userName: user.userName });
                         }
                         else {
                             res.status(500).send('error with session, no session');

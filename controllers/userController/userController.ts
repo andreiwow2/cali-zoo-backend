@@ -27,10 +27,8 @@ export class UserController extends BaseController {
                 req.logIn(user, function (err) {
                     if (err) { res.status(500).send('error'); console.log(err)}
                     if(req.session){ 
-                        req.session.save((err) => {
-                            
-                        });
-                        res.status(200).send(req.session.cookie);
+                        req.session.save((err) => {});
+                        res.status(200).json({cookie: req.session.cookie, userName: user.userName});
                     } else { res.status(500).send('error with session, no session'); }
                 });
             }
