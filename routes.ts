@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { UserController } from './controllers/userController/userController';
+import { ordersController } from './controllers/ordersController/ordersController';
 
 const router = Router();
 
@@ -19,5 +20,10 @@ router.post('/admin/logout', (req, res) => {
                 console.log('[/admin/logout]', err);
         });
 })
+
+
+
+
+router.get('/load/orders', ordersController.loadOrders);
 
 export default router;
